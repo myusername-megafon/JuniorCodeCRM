@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JuniorCodeCRM", "JuniorCodeCRM.csproj", "{A421182A-51DF-4B8A-BC80-7C5999C9CBE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A421182A-51DF-4B8A-BC80-7C5999C9CBE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A421182A-51DF-4B8A-BC80-7C5999C9CBE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A421182A-51DF-4B8A-BC80-7C5999C9CBE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A421182A-51DF-4B8A-BC80-7C5999C9CBE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {954DA02F-F14D-425F-87E3-417B7CA6FBD3}
+	EndGlobalSection
+EndGlobal

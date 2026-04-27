@@ -1,0 +1,6 @@
+@JuniorCodeCRM_HostAddress = http://localhost:5027
+
+GET {{JuniorCodeCRM_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
