@@ -1,0 +1,38 @@
+﻿<div class="tasks-page fade-in">
+    <div class="page-header">
+        <h1 class="page-title">Поручения</h1>
+        <button class="btn btn-accent" id="btn-add-task">
+            <span class="material-icons-outlined">add</span>
+            Новое поручение
+        </button>
+    </div>
+
+    <!-- Панель инструментов -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <div class="search-box">
+                <span class="material-icons-outlined">search</span>
+                <input type="text" class="form-input" id="search-tasks" placeholder="Поиск поручений...">
+            </div>
+            <select class="form-select" id="filter-assignee">
+                <option value="">Все исполнители</option>
+            </select>
+            <select class="form-select" id="filter-priority">
+                <option value="">Все приоритеты</option>
+                <option value="1">Низкий</option>
+                <option value="2">Средний</option>
+                <option value="3">Высокий</option>
+            </select>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn btn-outline btn-sm" id="btn-refresh-tasks">
+                <span class="material-icons-outlined">refresh</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Доска -->
+    <div class="board-container" id="board-container">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+    </div>
+</div>

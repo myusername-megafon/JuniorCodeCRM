@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АРМ Директора | Юниоркод Брянск</title>
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Основные стили -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <!-- Боковая панель -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="10" fill="#83d4fe" />
+                    <path d="M12 28L20 12L28 28H12Z" fill="#0a153a" />
+                    <circle cx="20" cy="24" r="3" fill="#83d4fe" />
+                </svg>
+                <div class="logo-text">
+                    <span class="logo-title">Юниоркод</span>
+                    <span class="logo-subtitle">АРМ Директора</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item">
+                <span class="material-icons-outlined">dashboard</span>
+                <span>Дашборд</span>
+            </a>
+            <a href="#employees" class="nav-item">
+                <span class="material-icons-outlined">people</span>
+                <span>Сотрудники</span>
+            </a>
+            <a href="#tasks" class="nav-item">
+                <span class="material-icons-outlined">view_kanban</span>
+                <span>Поручения</span>
+            </a>
+            <a href="#schedule" class="nav-item">
+                <span class="material-icons-outlined">calendar_month</span>
+                <span>Расписание</span>
+            </a>
+            <a href="#reports" class="nav-item">
+                <span class="material-icons-outlined">assessment</span>
+                <span>Отчёты</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="nav-item logout-btn" onclick="auth.logout()">
+                <span class="material-icons-outlined">logout</span>
+                <span>Выход</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Основная область -->
+    <div class="main-wrapper">
+        <!-- Верхняя панель -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="icon-btn menu-toggle" onclick="toggleSidebar()">
+                    <span class="material-icons-outlined">menu</span>
+                </button>
+                <div class="breadcrumb">
+                    <span id="breadcrumb-text">Дашборд</span>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="connection-status" id="connection-status">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">Онлайн</span>
+                </div>
+                <div class="user-avatar" title="Директор">
+                    <span class="material-icons-outlined">person</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Контент -->
+        <main class="app-content" id="app-content">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Контейнер для уведомлений -->
+    <div class="notifications-container" id="notifications"></div>
+
+    <!-- Контейнер для модальных окон -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <!-- Скрипты -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/router.js"></script>
+
+    <script>
+        // Переключение боковой панели
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.querySelector('.main-wrapper').classList.toggle('expanded');
+        }
+
+        // Обновление хлебных крошек
+        function updateBreadcrumb() {
+            const titles = {
+                '#dashboard': 'Дашборд',
+                '#employees': 'Сотрудники',
+                '#tasks': 'Поручения',
+                '#schedule': 'Расписание',
+                '#reports': 'Отчёты',
+                '#login': 'Вход'
+            };
+            const breadcrumb = document.getElementById('breadcrumb-text');
+            if (breadcrumb) {
+                breadcrumb.textContent = titles[window.location.hash] || 'Дашборд';
+            }
+        }
+
+        // Проверка соединения
+        async function updateConnectionStatus() {
+            const statusEl = document.getElementById('connection-status');
+            if (!statusEl) return;
+
+            const dot = statusEl.querySelector('.status-dot');
+            const text = statusEl.querySelector('.status-text');
+
+            try {
+                const response = await fetch(CONFIG.API_BASE_URL + '/dashboard', {
+                    headers: { 'Authorization': `Bearer ${api.getToken()}` }
+                });
+
+                if (response.ok) {
+                    dot.className = 'status-dot online';
+                    text.textContent = 'Онлайн';
+                } else if (response.status === 401) {
+                    dot.className = 'status-dot online';
+                    text.textContent = 'Онлайн';
+                } else {
+                    dot.className = 'status-dot offline';
+                    text.textContent = 'Офлайн';
+                }
+            } catch {
+                dot.className = 'status-dot offline';
+                text.textContent = 'Офлайн';
+            }
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            router.init();
+            updateConnectionStatus();
+            setInterval(updateConnectionStatus, 30000);
+
+            // Слушаем изменения хеша для хлебных крошек
+            window.addEventListener('hashchange', updateBreadcrumb);
+
+            // Обработчик формы логина
+            const observer = new MutationObserver(() => {
+                const loginForm = document.getElementById('login-form');
+                if (loginForm && !loginForm.dataset.initialized) {
+                    loginForm.dataset.initialized = 'true';
+                    initLoginForm();
+                }
+            });
+
+            observer.observe(document.getElementById('app-content'), {
+                childList: true,
+                subtree: true
+            });
+        });
+
+        // Инициализация формы входа
+        function initLoginForm() {
+            const form = document.getElementById('login-form');
+            const loginBtn = document.getElementById('login-btn');
+            const errorEl = document.getElementById('login-error');
+            const passwordToggle = document.getElementById('password-toggle');
+            const passwordInput = document.getElementById('password');
+
+            if (passwordToggle && passwordInput) {
+                passwordToggle.addEventListener('click', () => {
+                    const isPassword = passwordInput.type === 'password';
+                    passwordInput.type = isPassword ? 'text' : 'password';
+                    passwordToggle.querySelector('.material-icons-outlined').textContent =
+                        isPassword ? 'visibility' : 'visibility_off';
+                });
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const login = document.getElementById('login').value.trim();
+                const password = document.getElementById('password').value;
+
+                if (!login || !password) {
+                    errorEl.textContent = 'Заполните все поля';
+                    errorEl.style.animation = 'none';
+                    errorEl.offsetHeight;
+                    errorEl.style.animation = 'shake 0.5s ease';
+                    return;
+                }
+
+                loginBtn.classList.add('loading');
+                loginBtn.querySelector('span:first-child').textContent = 'Вход...';
+                errorEl.textContent = '';
+
+                const result = await auth.login(login, password);
+
+                if (result.success) {
+                    ui.showNotification('Добро пожаловать!', 'success');
+                    window.location.hash = '#dashboard';
+                } else {
+                    errorEl.textContent = result.message || 'Ошибка входа';
+                    errorEl.style.animation = 'none';
+                    errorEl.offsetHeight;
+                    errorEl.style.animation = 'shake 0.5s ease';
+                }
+
+                loginBtn.classList.remove('loading');
+                loginBtn.querySelector('span:first-child').textContent = 'Войти';
+            });
+        }
+    </script>
+
+    <style>
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-6px);
+            }
+
+            40% {
+                transform: translateX(6px);
+            }
+
+            60% {
+                transform: translateX(-4px);
+            }
+
+            80% {
+                transform: translateX(4px);
+            }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿<div class="schedule-page fade-in">
+    <div class="page-header">
+        <h1 class="page-title">Расписание занятий</h1>
+        <button class="btn btn-accent" id="btn-add-schedule">
+            <span class="material-icons-outlined">add</span>
+            Добавить занятие
+        </button>
+    </div>
+
+    <!-- Панель инструментов -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <div class="search-box">
+                <span class="material-icons-outlined">search</span>
+                <input type="text" class="form-input" id="search-schedule" placeholder="Поиск по названию...">
+            </div>
+            <select class="form-select" id="filter-schedule-teacher">
+                <option value="">Все преподаватели</option>
+            </select>
+            <select class="form-select" id="filter-schedule-direction">
+                <option value="">Все направления</option>
+            </select>
+            <select class="form-select" id="filter-schedule-recurring">
+                <option value="">Все типы</option>
+                <option value="true">Цикличные</option>
+                <option value="false">Разовые</option>
+            </select>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn btn-outline btn-sm" id="btn-refresh-schedule">
+                <span class="material-icons-outlined">refresh</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Вид календаря (неделя) -->
+    <div class="schedule-week-nav">
+        <button class="btn btn-outline btn-sm" id="btn-prev-week">
+            <span class="material-icons-outlined">chevron_left</span>
+        </button>
+        <span class="week-label" id="week-label"></span>
+        <button class="btn btn-outline btn-sm" id="btn-next-week">
+            <span class="material-icons-outlined">chevron_right</span>
+        </button>
+        <button class="btn btn-outline btn-sm" id="btn-today-week">Сегодня</button>
+        <button class="btn btn-outline btn-sm" id="btn-list-view">
+            <span class="material-icons-outlined">list</span>
+            Список
+        </button>
+    </div>
+
+    <!-- Сетка недели -->
+    <div class="schedule-grid" id="schedule-grid">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+    </div>
+
+    <!-- Список (скрыт по умолчанию) -->
+    <div id="schedule-list-container" style="display:none;">
+        <div id="schedule-table"></div>
+        <div id="schedule-pagination"></div>
+    </div>
+</div>

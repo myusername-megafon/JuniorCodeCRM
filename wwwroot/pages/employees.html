@@ -1,0 +1,43 @@
+﻿<div class="employees-page fade-in">
+    <div class="page-header">
+        <h1 class="page-title">Сотрудники</h1>
+        <button class="btn btn-accent" id="btn-add-employee">
+            <span class="material-icons-outlined">person_add</span>
+            Добавить сотрудника
+        </button>
+    </div>
+
+    <!-- Панель инструментов -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <div class="search-box">
+                <span class="material-icons-outlined">search</span>
+                <input type="text" class="form-input" id="search-employees" placeholder="Поиск по ФИО...">
+            </div>
+            <select class="form-select" id="filter-department">
+                <option value="">Все отделы</option>
+            </select>
+            <select class="form-select" id="filter-position">
+                <option value="">Все должности</option>
+            </select>
+            <select class="form-select" id="filter-status">
+                <option value="">Все</option>
+                <option value="true">Активные</option>
+                <option value="false">Архивные</option>
+            </select>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn btn-outline btn-sm" id="btn-refresh-employees">
+                <span class="material-icons-outlined">refresh</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Таблица -->
+    <div id="employees-table-container">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+    </div>
+
+    <!-- Пагинация -->
+    <div id="employees-pagination"></div>
+</div>

@@ -1,6 +1,10 @@
-﻿namespace JuniorCodeCRM.Services.Interfaces
+﻿using JuniorCodeCRM.Models.DTOs.Report;
+
+namespace JuniorCodeCRM.Services.Interfaces;
+
+public interface IReportService
 {
-    public class IReportService
-    {
-    }
+    Task<List<StaffByDepartmentDto>> GetStaffByDepartmentReportAsync();
+    Task<List<TaskExecutionDto>> GetTaskExecutionReportAsync();
+    Task<List<TeacherLoadDto>> GetTeacherLoadReportAsync();
 }

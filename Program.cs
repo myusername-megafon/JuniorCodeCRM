@@ -11,6 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Регистрация всех сервисов
 builder.Services.AddApplicationServices();
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 // CORS для веб-клиента и мобильного приложения
 builder.Services.AddCors(options =>
@@ -40,6 +41,25 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
+
+// Раздача статических файлов из wwwroot
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+// SPA fallback — все не-API запросы направляем на index.html
+app.MapWhen(ctx => !ctx.Request.Path.StartsWithSegments("/api"), appBuilder =>
+{
+    appBuilder.Use(async (context, next) =>
+    {
+        if (!System.IO.Path.HasExtension(context.Request.Path.Value))
+        {
+            context.Request.Path = "/index.html";
+        }
+        await next();
+    });
+    appBuilder.UseStaticFiles();
+});
+
 app.UseHttpsRedirection();
 app.MapControllers();
 

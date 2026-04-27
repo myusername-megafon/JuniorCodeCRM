@@ -1,0 +1,78 @@
+﻿<div class="dashboard-page">
+    <!-- Приветствие -->
+    <div class="dashboard-header fade-in">
+        <div>
+            <h1 class="page-title">Дашборд</h1>
+            <p class="dashboard-date" id="dashboard-date"></p>
+        </div>
+        <button class="btn btn-outline" onclick="location.reload()">
+            <span class="material-icons-outlined">refresh</span>
+            Обновить
+        </button>
+    </div>
+
+    <!-- Карточки метрик -->
+    <div class="metrics-grid" id="metrics-grid">
+        <div class="metric-card skeleton-card"></div>
+        <div class="metric-card skeleton-card"></div>
+        <div class="metric-card skeleton-card"></div>
+        <div class="metric-card skeleton-card"></div>
+        <div class="metric-card skeleton-card"></div>
+        <div class="metric-card skeleton-card"></div>
+    </div>
+
+    <!-- Графики и таблицы -->
+    <div class="dashboard-grid">
+        <!-- Загрузка отделов -->
+        <div class="card chart-card">
+            <div class="card-header">
+                <h3>Загрузка отделов</h3>
+                <span class="material-icons-outlined text-muted">business</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" id="chart-departments">
+                    <div class="loading-spinner"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Распределение поручений -->
+        <div class="card chart-card">
+            <div class="card-header">
+                <h3>Статусы поручений</h3>
+                <span class="material-icons-outlined text-muted">pie_chart</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" id="chart-tasks">
+                    <div class="loading-spinner"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ближайшие занятия -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Ближайшие занятия</h3>
+                <span class="material-icons-outlined text-muted">event_upcoming</span>
+            </div>
+            <div class="card-body">
+                <div id="upcoming-classes">
+                    <div class="loading-spinner"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Просроченные поручения -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Критические поручения</h3>
+                <span class="material-icons-outlined text-danger">warning</span>
+            </div>
+            <div class="card-body">
+                <div id="critical-tasks">
+                    <div class="loading-spinner"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+﻿<div class="reports-page fade-in">
+    <div class="page-header">
+        <h1 class="page-title">Отчёты</h1>
+    </div>
+
+    <!-- Сетка отчётов -->
+    <div class="reports-grid">
+        <!-- Отчёт 1: Кадровый состав -->
+        <div class="card report-card" id="report-staff">
+            <div class="card-header">
+                <div>
+                    <h3>Кадровый состав по отделам</h3>
+                    <p class="report-description">Группировка сотрудников по отделам и должностям с учётом совмещения</p>
+                </div>
+                <span class="material-icons-outlined report-icon">people</span>
+            </div>
+            <div class="card-body">
+                <div id="report-staff-content">
+                    <div class="loading-spinner"><div class="spinner"></div></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-outline btn-sm" onclick="loadReport('staff')">
+                    <span class="material-icons-outlined">refresh</span>
+                    Обновить
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="exportReport('staff-by-department', 'XLSX')">
+                    <span class="material-icons-outlined">table_view</span>
+                    XLSX
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="exportReport('staff-by-department', 'PDF')">
+                    <span class="material-icons-outlined">picture_as_pdf</span>
+                    PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Отчёт 2: Исполнение поручений -->
+        <div class="card report-card" id="report-tasks">
+            <div class="card-header">
+                <div>
+                    <h3>Исполнение поручений</h3>
+                    <p class="report-description">Сводка по статусам, исполнителям и просрочкам</p>
+                </div>
+                <span class="material-icons-outlined report-icon">assignment_turned_in</span>
+            </div>
+            <div class="card-body">
+                <div id="report-tasks-content">
+                    <div class="loading-spinner"><div class="spinner"></div></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-outline btn-sm" onclick="loadReport('tasks')">
+                    <span class="material-icons-outlined">refresh</span>
+                    Обновить
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="exportReport('task-execution', 'XLSX')">
+                    <span class="material-icons-outlined">table_view</span>
+                    XLSX
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="exportReport('task-execution', 'PDF')">
+                    <span class="material-icons-outlined">picture_as_pdf</span>
+                    PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Отчёт 3: Загрузка преподавателей -->
+        <div class="card report-card" id="report-teachers">
+            <div class="card-header">
+                <div>
+                    <h3>Загрузка преподавателей</h3>
+                    <p class="report-description">Распределение учебной нагрузки с суммированием часов</p>
+                </div>
+                <span class="material-icons-outlined report-icon">school</span>
+            </div>
+            <div class="card-body">
+                <div id="report-teachers-content">
+                    <div class="loading-spinner"><div class="spinner"></div></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-outline btn-sm" onclick="loadReport('teachers')">
+                    <span class="material-icons-outlined">refresh</span>
+                    Обновить
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="exportReport('teacher-load', 'XLSX')">
+                    <span class="material-icons-outlined">table_view</span>
+                    XLSX
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="exportReport('teacher-load', 'PDF')">
+                    <span class="material-icons-outlined">picture_as_pdf</span>
+                    PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

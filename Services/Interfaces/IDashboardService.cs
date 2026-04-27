@@ -1,6 +1,8 @@
-﻿namespace JuniorCodeCRM.Services.Interfaces
+﻿using JuniorCodeCRM.Models.DTOs.Dashboard;
+
+namespace JuniorCodeCRM.Services.Interfaces;
+
+public interface IDashboardService
 {
-    public class IDashboardService
-    {
-    }
+    Task<DashboardDto> GetDashboardAsync();
 }

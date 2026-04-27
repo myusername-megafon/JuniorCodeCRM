@@ -1,0 +1,316 @@
+﻿/* ============================================================
+   ДОСКА ПОРУЧЕНИЙ (TRELLO-LIKE)
+   ============================================================ */
+
+.tasks-page {
+    height: calc(100vh - var(--topbar-height) - 3rem);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Контейнер доски */
+.board-container {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.5rem;
+    min-height: 0;
+}
+
+/* Колонка */
+.board-column {
+    flex: 1;
+    min-width: 280px;
+    max-width: 360px;
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    border: 1px solid var(--border-light);
+}
+
+.board-column-header {
+    padding: 1rem 1rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.board-column-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.column-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.column-count {
+    background: rgba(0,0,0,0.08);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.board-column-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 0.75rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+    .board-column-body.drag-over {
+        background: rgba(131,212,254,0.08);
+        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+
+/* Карточка поручения */
+.task-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+    box-shadow: var(--shadow-sm);
+    cursor: grab;
+    transition: all var(--transition-fast);
+    border: 1px solid var(--border-light);
+    position: relative;
+    animation: fadeInScale 0.25s ease;
+}
+
+    .task-card:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-1px);
+    }
+
+    .task-card:active {
+        cursor: grabbing;
+        box-shadow: var(--shadow-lg);
+        transform: rotate(1deg) scale(1.02);
+    }
+
+    .task-card.dragging {
+        opacity: 0.5;
+        transform: rotate(3deg) scale(0.95);
+    }
+
+    .task-card .task-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .task-card .task-card-title {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.3;
+        flex: 1;
+        cursor: pointer;
+        transition: color var(--transition-fast);
+    }
+
+        .task-card .task-card-title:hover {
+            color: var(--primary);
+        }
+
+    .task-card .task-card-menu {
+        opacity: 0;
+        transition: opacity var(--transition-fast);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        flex-shrink: 0;
+    }
+
+    .task-card:hover .task-card-menu {
+        opacity: 1;
+    }
+
+    .task-card .task-card-menu:hover {
+        background: var(--bg);
+        color: var(--text);
+    }
+
+    .task-card .task-card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .task-card .task-card-assignee {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+
+        .task-card .task-card-assignee .avatar-xs {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+
+    .task-card .task-card-deadline {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 0.75rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+        .task-card .task-card-deadline.overdue {
+            color: var(--danger);
+            background: var(--danger-light);
+        }
+
+        .task-card .task-card-deadline.near {
+            color: var(--warning);
+            background: var(--warning-light);
+        }
+
+        .task-card .task-card-deadline.normal {
+            color: var(--text-secondary);
+        }
+
+    .task-card .task-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.6rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--border-light);
+    }
+
+    .task-card .task-card-priority {
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+/* Кнопка добавления в колонку */
+.board-add-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    margin: 0.25rem 0.75rem 0.75rem;
+    border-radius: var(--radius);
+    border: 1.5px dashed var(--border);
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    transition: all var(--transition-fast);
+    font-family: var(--font);
+    text-align: left;
+}
+
+    .board-add-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent-dark);
+        background: rgba(131,212,254,0.05);
+    }
+
+    .board-add-btn .material-icons-outlined {
+        font-size: 1.1rem;
+    }
+
+/* Пустая колонка */
+.board-column-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+    text-align: center;
+    flex: 1;
+}
+
+    .board-column-empty .material-icons-outlined {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.4;
+    }
+
+/* Контекстное меню карточки */
+.task-context-menu {
+    position: fixed;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border);
+    z-index: 250;
+    min-width: 180px;
+    padding: 0.5rem;
+    animation: fadeInScale 0.2s ease;
+}
+
+    .task-context-menu button {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 0.85rem;
+        color: var(--text);
+        border-radius: var(--radius-sm);
+        transition: all var(--transition-fast);
+        font-family: var(--font);
+        text-align: left;
+    }
+
+        .task-context-menu button:hover {
+            background: var(--bg);
+        }
+
+        .task-context-menu button.danger {
+            color: var(--danger);
+        }
+
+            .task-context-menu button.danger:hover {
+                background: var(--danger-light);
+            }
+
+    .task-context-menu .material-icons-outlined {
+        font-size: 1.1rem;
+    }
+
+    .task-context-menu .divider {
+        height: 1px;
+        background: var(--border-light);
+        margin: 0.25rem 0;
+    }

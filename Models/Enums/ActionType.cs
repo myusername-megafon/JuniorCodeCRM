@@ -1,6 +1,10 @@
-﻿namespace JuniorCodeCRM.Models.Enums
+﻿namespace JuniorCodeCRM.Models.Enums;
+
+public enum ActionType
 {
-    public class ActionType
-    {
-    }
+    CREATE,
+    UPDATE,
+    DELETE,
+    EXPORT,
+    LOGIN
 }

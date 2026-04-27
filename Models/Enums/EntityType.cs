@@ -1,6 +1,8 @@
-﻿namespace JuniorCodeCRM.Models.Enums
+﻿namespace JuniorCodeCRM.Models.Enums;
+
+public enum EntityType
 {
-    public class EntityType
-    {
-    }
+    Employee,
+    Task,
+    Schedule
 }

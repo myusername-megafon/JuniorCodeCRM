@@ -1,6 +1,9 @@
-﻿namespace JuniorCodeCRM.Services.Interfaces
+﻿using JuniorCodeCRM.Models.Enums;
+
+namespace JuniorCodeCRM.Services.Interfaces;
+
+public interface IAuditService
 {
-    public class IAuditService
-    {
-    }
+    Task LogAsync(ActionType actionType, EntityType entityType, int? entityId,
+        string? oldValues, string? newValues, string? ipAddress);
 }

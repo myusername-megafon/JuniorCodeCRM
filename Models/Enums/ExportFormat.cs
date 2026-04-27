@@ -1,6 +1,7 @@
-﻿namespace JuniorCodeCRM.Models.Enums
+﻿namespace JuniorCodeCRM.Models.Enums;
+
+public enum ExportFormat
 {
-    public class ExportFormat
-    {
-    }
+    XLSX,
+    PDF
 }
